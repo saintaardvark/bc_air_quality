@@ -27,6 +27,19 @@ def fetch(type):
     logger.info("Not implemented yet")
     pass
 
+@click.command("load",
+               short_help="Load already-downloaded data into InfluxDB")
+@click.option("--type",
+                default="PM10",
+                help="Type of data to import")
+def load(type):
+    """Import data into InfluxDB
+    """
+    logger = logging.getLogger(__name__)
+    logger.info("Not implemented yet")
+    pass
+
+
 
 @click.command("explore",
                short_help="Tool to explore already-downloaded data a bit")
@@ -51,6 +64,7 @@ def explore(csv_file):
 
 bcaq.add_command(explore)
 bcaq.add_command(fetch)
+bcaq.add_command(load)
 
 if __name__ == '__main__':
     log_fmt = "%(asctime)s - %(name)s - %(levelname)s - %(message)s"
