@@ -6,9 +6,11 @@ import os
 import time
 
 import click
+from dotenv import find_dotenv, load_dotenv
 import pandas as pd
 
 from  data.csv_to_df import import_csv
+from  data.influxdb import build_influxdb_client, build_influxdb_data, write_influx_data
 
 @click.group("bcaq")
 def bcaq():
@@ -18,8 +20,8 @@ def bcaq():
 @click.command("fetch",
                short_help="Fetch data from BC Env server")
 @click.option("--type",
-                default="PM10",
-                help="Type of data to fetch")
+              default="PM10",
+              help="Type of data to fetch")
 def fetch(type):
     """Fetch data from BC Env server
     """
@@ -27,18 +29,23 @@ def fetch(type):
     logger.info("Not implemented yet")
     pass
 
+
 @click.command("load",
                short_help="Load already-downloaded data into InfluxDB")
+@click.argument("csv_file", type=click.File("r"))
 @click.option("--type",
-                default="PM10",
-                help="Type of data to import")
-def load(type):
+              default="PM10",
+              help="Type of data to import")
+def load(type, csv_file):
     """Import data into InfluxDB
     """
     logger = logging.getLogger(__name__)
-    logger.info("Not implemented yet")
+    df = import_csv(csv_file)
+    influx_data = build_influxdb_data(df)
+    influx_client = build_influxdb_client()
+    write_influx_data(influx_data, influx_client)
+    logger.info("Done!")
     pass
-
 
 
 @click.command("explore",
@@ -68,5 +75,5 @@ bcaq.add_command(load)
 
 if __name__ == '__main__':
     log_fmt = "%(asctime)s - %(name)s - %(levelname)s - %(message)s"
-    logging.basicConfig(level=logging.INFO, format=log_fmt)
+    logging.basicConfig(level=logging.DEBUG, format=log_fmt)
     bcaq()

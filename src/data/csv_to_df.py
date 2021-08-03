@@ -1,6 +1,8 @@
 import pandas as pd
 import logging
 
+# TODO: this whole thing should be made into its own standalone module
+# for my own use.
 
 # TODO: Fix this fugly import path
 def import_csv(csv_file):
