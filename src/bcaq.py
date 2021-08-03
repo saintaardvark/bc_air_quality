@@ -15,6 +15,19 @@ def bcaq():
     """A wrapper for BC air quality data stuff
     """
 
+@click.command("fetch",
+               short_help="Fetch data from BC Env server")
+@click.option("--type",
+                default="PM10",
+                help="Type of data to fetch")
+def fetch(type):
+    """Fetch data from BC Env server
+    """
+    logger = logging.getLogger(__name__)
+    logger.info("Not implemented yet")
+    pass
+
+
 @click.command("explore",
                short_help="Tool to explore already-downloaded data a bit")
 @click.argument("csv_file", type=click.File("r"))
@@ -37,6 +50,7 @@ def explore(csv_file):
 
 
 bcaq.add_command(explore)
+bcaq.add_command(fetch)
 
 if __name__ == '__main__':
     log_fmt = "%(asctime)s - %(name)s - %(levelname)s - %(message)s"
