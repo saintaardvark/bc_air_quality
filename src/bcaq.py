@@ -16,7 +16,7 @@ def bcaq():
     """
 
 @click.command("explore",
-               short_help="a tool to explore the data a bit")
+               short_help="Tool to explore already-downloaded data a bit")
 @click.argument("csv_file", type=click.File("r"))
 def explore(csv_file):
     """A tool to explore the data a bit.
