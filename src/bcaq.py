@@ -10,11 +10,16 @@ import pandas as pd
 
 from  data.csv_to_df import import_csv
 
-@click.command(short_help="Explore CSV")
-@click.argument("csv_file", type=click.File("r"))
-def main(csv_file):
+@click.group("bcaq")
+def bcaq():
+    """A wrapper for BC air quality data stuff
     """
-    Main entry point
+
+@click.command("explore",
+               short_help="a tool to explore the data a bit")
+@click.argument("csv_file", type=click.File("r"))
+def explore(csv_file):
+    """A tool to explore the data a bit.
     """
     logger = logging.getLogger(__name__)
 
@@ -31,8 +36,9 @@ def main(csv_file):
     logger.info("Done!")
 
 
-if __name__ == "__main__":
+bcaq.add_command(explore)
+
+if __name__ == '__main__':
     log_fmt = "%(asctime)s - %(name)s - %(levelname)s - %(message)s"
     logging.basicConfig(level=logging.INFO, format=log_fmt)
-
-    main()
+    bcaq()
