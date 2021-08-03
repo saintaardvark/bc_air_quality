@@ -40,7 +40,7 @@ def load(type, csv_file):
     """Import data into InfluxDB
     """
     logger = logging.getLogger(__name__)
-    df = import_csv(csv_file)
+    df = import_csv(csv_file, parse_dates=["DATE_PST"])
     influx_data = build_influxdb_data(df)
     influx_client = build_influxdb_client()
     write_influx_data(influx_data, influx_client)
@@ -57,7 +57,7 @@ def explore(csv_file):
     logger = logging.getLogger(__name__)
 
     # TODO: Those dates should be at end of day, rather than beginning of day
-    df = import_csv(csv_file)
+    df = import_csv(csv_file, parse_dates=["DATE_PST"])
     print(df)
     print(df.STATION_NAME.unique())
     print(df.UNIT.unique())
