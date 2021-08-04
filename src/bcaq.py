@@ -51,10 +51,10 @@ def fetch(datatype):
 @click.command("load",
                short_help="Load already-downloaded data into InfluxDB")
 @click.argument("csv_file", type=click.File("r"))
-@click.option("--type",
+@click.option("--datatype",
               default="PM10",
               help="Type of data to import")
-def load(type, csv_file):
+def load(datatype, csv_file):
     """Import data into InfluxDB
     """
     logger = logging.getLogger(__name__)
