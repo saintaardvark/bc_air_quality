@@ -48,6 +48,8 @@ def fetch(datatype):
         logger.critical(f"{data_type} not supported")
 
 
+# TODO: Add option to limit number of rows
+# TODO: Skip nan values (possibly during CSV import)
 @click.command("load",
                short_help="Load already-downloaded data into InfluxDB")
 @click.argument("csv_file", type=click.File("r"))
