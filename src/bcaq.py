@@ -54,16 +54,28 @@ def fetch(datatype):
 @click.option("--datatype",
               default="PM10",
               help="Type of data to import")
-def load(datatype, csv_file):
+@click.option("--station",
+              default="",
+              help="Limit to just this station.  Default: empty, so load *all* station data.")
+@click.option("--dryrun/--no-dryrun",
+              default=False,
+              help="Dry run")
+def load(csv_file, datatype, station, dryrun):
     """Import data into InfluxDB
     """
     logger = logging.getLogger(__name__)
     df = import_csv(csv_file, parse_dates=["DATE_PST"])
+    if station:
+        logger.info(f"Limiting data to station {station}")
+        df = df['STATION_NAME'].str.match(station)
+
     influx_data = build_influxdb_data(df)
-    influx_client = build_influxdb_client()
-    write_influx_data(influx_data, influx_client)
-    logger.info("Done!")
-    pass
+    # logger.info(influx_data[0])
+    if not dryrun:
+        influx_client = build_influxdb_client()
+        logger.info("Writing data to influxdb...")
+        write_influx_data(influx_data, influx_client)
+        logger.info("Done!")
 
 
 @click.command("explore",
