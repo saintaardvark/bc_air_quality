@@ -1,6 +1,6 @@
 """URL constants
 """
 
-ENVBC_URL = "ftp://ftp.env.gov.bc.ca/pub"
-RAW_AQ_URL = f"{ENVBC_URL}/outgoing/AIR/Hourly_Raw_Air_Data/Year_to_Date/"
-PM10_CSV = "PM10.csv"
+ENVBC_HOST = "ftp.env.gov.bc.ca"
+RAW_AQ_DIR = "/pub/outgoing/AIR/Hourly_Raw_Air_Data/Year_to_Date/"
+CSV_FILES = {"PM10": "PM10.csv"}
