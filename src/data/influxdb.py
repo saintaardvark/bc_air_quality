@@ -31,10 +31,8 @@ def build_influxdb_data(df):
             },
             "time": index,
         }
-        logger.debug(measurement)
         influx_data.append(measurement)
 
-    logger.debug(influx_data)
     return influx_data
 
 def build_influxdb_client():
@@ -44,11 +42,11 @@ def build_influxdb_client():
     # Setup influx client
     logger = logging.getLogger(__name__)
 
-    db = os.getenv("INFLUX_DB", "You forgot to set an environment variable in .secret.sh!")
-    host = os.getenv("INFLUX_HOST", "You forgot to set an environment variable in .secret.sh!")
-    port = os.getenv("INFLUX_PORT", "You forgot to set an environment variable in .secret.sh!")
-    influx_user = os.getenv("INFLUX_USER", "You forgot to set an environment variable in .secret.sh!")
-    influx_pass = os.getenv("INFLUX_PASS", "You forgot to set an environment variable in .secret.sh!")
+    db = os.getenv("INFLUX_DB", "You forgot to set INFLUX_DB in .secret.sh!")
+    host = os.getenv("INFLUX_HOST", "You forgot to set INFLUX_HOST in .secret.sh!")
+    port = os.getenv("INFLUX_PORT", "You forgot to set INFLUX_PORT in .secret.sh!")
+    influx_user = os.getenv("INFLUX_USER", "You forgot to set INFLUX_USER in .secret.sh!")
+    influx_pass = os.getenv("INFLUX_PASS", "You forgot to set INFLUX_PASS in .secret.sh!")
 
     influx_client = InfluxDBClient(
         host=host,
