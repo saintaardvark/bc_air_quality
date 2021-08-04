@@ -69,7 +69,10 @@ def load(datatype, csv_file):
 @click.command("explore",
                short_help="Tool to explore already-downloaded data a bit")
 @click.argument("csv_file", type=click.File("r"))
-def explore(csv_file):
+@click.option("--station",
+              default="Burnaby South",
+              help="Try to show data from just this station.  Another option:  New Westminster Sapperton Park")
+def explore(csv_file, station):
     """A tool to explore the data a bit.
     """
     logger = logging.getLogger(__name__)
@@ -80,7 +83,8 @@ def explore(csv_file):
     print(df.STATION_NAME.unique())
     print(df.UNIT.unique())
     print(df.dtypes)
-    print(df['STATION_NAME'] == "Burnaby South")
+    print(f"Now for stations matching {station}...")
+    print(df[df['STATION_NAME'].str.match(station)])
     # influx_data = build_influxdb_data(df)
     # influx_client = build_influxdb_client()
     # write_influx_data(influx_data, influx_client)
