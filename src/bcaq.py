@@ -98,4 +98,5 @@ bcaq.add_command(load)
 if __name__ == '__main__':
     log_fmt = "%(asctime)s - %(name)s - %(levelname)s - %(message)s"
     logging.basicConfig(level=logging.DEBUG, format=log_fmt)
+    load_dotenv(".secret.sh")
     bcaq()
