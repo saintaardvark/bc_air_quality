@@ -59,14 +59,17 @@ def fetch(datatype):
 @click.option("--station",
               default="",
               help="Limit to just this station.  Default: empty, so load *all* station data.")
+@click.option("--nrows",
+              default=0,
+              help="Limit to the first [number] of points.  Default: 0, so load *all* data.")
 @click.option("--dryrun/--no-dryrun",
               default=False,
               help="Dry run")
-def load(csv_file, datatype, station, dryrun):
+def load(csv_file, datatype, station, nrows, dryrun):
     """Import data into InfluxDB
     """
     logger = logging.getLogger(__name__)
-    df = import_csv(csv_file, parse_dates=["DATE_PST"])
+    df = import_csv(csv_file, parse_dates=["DATE_PST"], nrows=nrows)
     if station:
         logger.info(f"Limiting data to station {station}")
         df = df['STATION_NAME'].str.match(station)
