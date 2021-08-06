@@ -11,7 +11,7 @@ from influxdb import InfluxDBClient
 import pandas as pd
 
 
-def build_influxdb_data(df):
+def build_influxdb_data(df, datatype):
     """
     Build influxdb data out of dataframe and return
     """
@@ -21,12 +21,14 @@ def build_influxdb_data(df):
     influx_data = []
     # TODO: All this is hardcoded & shouldn't be
     for index, row in df.iterrows():
-        ts = index.timestamp()  # seconds since epoch, as float
+        # ts = index.timestamp()  # seconds since epoch, as float
         # logger.debug(ts)
         measurement = {
-            "measurement": "PM10",
+            "measurement": datatype,
             "fields": {
-                "pm10": row['ROUNDED_VALUE'],
+                datatype: row['ROUNDED_VALUE'],
+            },
+            "tags": {
                 "station_name": row['STATION_NAME'],
             },
             "time": index,

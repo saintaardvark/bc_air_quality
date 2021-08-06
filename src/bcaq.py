@@ -74,7 +74,7 @@ def load(csv_file, datatype, station, nrows, dryrun):
         logger.info(f"Limiting data to station {station}")
         df = df['STATION_NAME'].str.match(station)
 
-    influx_data = build_influxdb_data(df)
+    influx_data = build_influxdb_data(df, datatype)
     # logger.info(influx_data[0])
     if not dryrun:
         influx_client = build_influxdb_client()
