@@ -11,6 +11,11 @@ from influxdb import InfluxDBClient
 import pandas as pd
 
 
+# OTOH, this could probably be made bigger.  OTOH, this allowed the
+# PM25 data to be imported successfully for the first time, so ¯\_(ツ)_/¯
+DEFAULT_BATCH_SIZE = 10_000
+
+
 def build_influxdb_data(df, datatype):
     """
     Build influxdb data out of dataframe and return
@@ -69,5 +74,5 @@ def write_influx_data(influx_data, influx_client):
     """
     logger = logging.getLogger(__name__)
     logger.info("Writing data to influxdb...")
-
-    influx_client.write_points(influx_data, time_precision="s")
+    logger.info("Number of data points: ".format(len(influx_data)))
+    influx_client.write_points(influx_data, time_precision="s", batch_size=DEFAULT_BATCH_SIZE)
